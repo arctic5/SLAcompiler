@@ -2,6 +2,17 @@
  
 import sys
  
+def newUserAttribute():
+    global newCode
+    global currentCharToCheck
+    newCode += code[currentCharToCheck]
+    currentCharToCheck += 1
+    while code[currentCharToCheck] != '"':
+        newCode += code[currentCharToCheck]
+        currentCharToCheck += 1
+    newCode += code[currentCharToCheck]
+    currentCharToCheck += 1
+ 
 def newClass():
     global newCode
     global currentCharToCheck
@@ -28,18 +39,25 @@ def newId(): #Thankfully for me, ids are much easier to replace than classes.
 def startReplacing():
     global newCode
     global currentCharToCheck
+    print code[currentCharToCheck]
+    newCode += code[currentCharToCheck]
+    currentCharToCheck += 1
+    print code[currentCharToCheck]
     while code[currentCharToCheck] != '>': #Keep checking for replacements until we hit a close.
         if code[currentCharToCheck] == '.':
-            print 'Now in second-level replacing: Classes.'
             newClass()
         elif code[currentCharToCheck] == "#":
-            print 'Now in second-level replacing: IDs.'
             newId()
+        elif code[currentCharToCheck] == '"':
+            newUserAttribute()
         else:
             newCode += code[currentCharToCheck]
             currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
     newCode += code[currentCharToCheck] #Append the >
-    print 'Returning to lower level.'
+def writeCompiledToFile(name,string):
+    nameAndExtension = (name+"compiled.html")
+    compiled = open(nameAndExtension, 'w')
+    compiled.write(string)
  
 print 'GSLAUUA v0.01 alpha - A simple hypertext markup language recompiler.'
 print 'Because GSLAUUA is more pronouncable than SHTMLR!'
@@ -57,23 +75,17 @@ code = rawFileData.read()
 rawFileData.close()
 currentCharToCheck = 0
 newCode = ''
-print code
-raw_input('Press Enter')
 print 'GSLAUUA is now evaluating your code. Be patient!'
 while len(code) != currentCharToCheck:
-    print 'New loop'
     if code[currentCharToCheck] == '<':
-        print 'Now in first level of replacing.'
         startReplacing()
     else:
-        print 'Writing text.'
         newCode += code[currentCharToCheck] #There's probably a much better way to do this than write our code letter-for-letter.
     currentCharToCheck += 1
  
 print 'Compilation complete.'
 print newCode
-compiledFileName = openThisFile,"compiled.sla"
-blankFile = file(compiledFileName, 'w+')
+writeCompiledToFile(openThisFile,newCode)
 raw_input('Press Enter')
 #print "Good news! We have translated your SLA file to HTML!/nAll we need is a filename for your new code and we're done./nYou should probably end it in .html since that's what this is."
 #newFilename = raw_input('>>')
