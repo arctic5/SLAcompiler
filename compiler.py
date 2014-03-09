@@ -1,7 +1,17 @@
 #!/usr/bin/env python2.7
- 
+
 import sys
- 
+
+def ignorePHP():
+    global newCode
+    global currentCharToCheck
+    phpCodeUsed = 'true'
+    while code[currentCharToCheck] != '>':
+        newCode += code[currentCharToCheck]
+        currentCharToCheck += 1
+    newCode += code[currentCharToCheck]
+    currentCharToCheck += 1
+
 def newUserAttribute():
     global newCode
     global currentCharToCheck
@@ -12,7 +22,7 @@ def newUserAttribute():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
- 
+
 def newClass():
     global newCode
     global currentCharToCheck
@@ -25,7 +35,7 @@ def newClass():
             newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"' #And finish it off with the closing "! DO NOT ADD A SPACE since spaces are added before classes and ids already. Other spaces are user-defined.
- 
+
 def newId(): #Thankfully for me, ids are much easier to replace than classes.
     global newCode
     global currentCharToCheck
@@ -35,34 +45,39 @@ def newId(): #Thankfully for me, ids are much easier to replace than classes.
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"'
- 
+
 def startReplacing():
     global newCode
     global currentCharToCheck
-    print code[currentCharToCheck]
-    newCode += code[currentCharToCheck]
+    newCode += code[currentCharToCheck] # Put in the <.
     currentCharToCheck += 1
-    print code[currentCharToCheck]
-    while code[currentCharToCheck] != '>': #Keep checking for replacements until we hit a close.
-        if code[currentCharToCheck] == '.':
-            newClass()
-        elif code[currentCharToCheck] == "#":
-            newId()
-        elif code[currentCharToCheck] == '"':
-            newUserAttribute()
-        else:
-            newCode += code[currentCharToCheck]
-            currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
-    newCode += code[currentCharToCheck] #Append the >
-def writeCompiledToFile(name,string):
-    nameAndExtension = (name+"compiled.html")
-    compiled = open(nameAndExtension, 'w')
-    compiled.write(string)
- 
-print 'GSLAUUA v0.01 alpha - A simple hypertext markup language recompiler.'
-print 'Because GSLAUUA is more pronouncable than SHTMLR!'
-print 'Please enter the name of your SLA formatted file below.'
-openThisFile = raw_input('>>')
+    if code[currentCharToCheck] == '?': #Special code to ignore PHP blocks.
+        ignorePHP()
+    else:
+        while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
+            if code[currentCharToCheck] == '.': # .s are classes
+                newClass()
+            elif code[currentCharToCheck] == "#": # #s are ids
+                newId()
+            elif code[currentCharToCheck] == '"': # "s are user attributes
+                newUserAttribute()
+            else:
+                newCode += code[currentCharToCheck]
+                currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
+        newCode += code[currentCharToCheck] #Append the >
+
+fileImported = 0
+phpCodeUsed = 'false'
+if len(sys.argv) != 1:
+    oldFileName = sys.argv[1]
+    if (oldFileName[-4:]) == '.sla':
+        fileImported = 1
+        openThisFile = oldFileName
+if fileImported == 0:
+    print 'GSLAUUA v0.01 alpha - A simple hypertext markup language recompiler.'
+    print 'Because GSLAUUA is more pronouncable than SHTMLR!'
+    print 'Please enter the name of your SLA formatted file below.'
+    openThisFile = raw_input('>>')
 if len(openThisFile) == 0:
     print 'Quit: No file opened.'
     sys.exit()
@@ -82,15 +97,19 @@ while len(code) != currentCharToCheck:
     else:
         newCode += code[currentCharToCheck] #There's probably a much better way to do this than write our code letter-for-letter.
     currentCharToCheck += 1
- 
-print 'Compilation complete.'
-print newCode
-writeCompiledToFile(openThisFile,newCode)
-raw_input('Press Enter')
-#print "Good news! We have translated your SLA file to HTML!/nAll we need is a filename for your new code and we're done./nYou should probably end it in .html since that's what this is."
-#newFilename = raw_input('>>')
-#print 'GSLALUA is now saving', newFilename, 'in plain HTML.'
-#with open(newFilename, 'w') as newFile:
-#    newFile.write("{0}".format(str(newCode)))
- 
-#Test with <div#menu.slide></div>, see what comes out.
+
+#print newCode
+#raw_input('Press Enter')
+if fileImported == 0:
+    print "Good news! We have translated your SLA file to HTML!"
+    print "All we need is a filename for your new code and we're done."
+    print "You should probably end it in .html since that's what this is."
+    newFilename = raw_input('>>')
+else:
+    if phpCodeUsed = 'false':
+        newFilename = oldFileName[:-4] + '.html'
+    else
+        newFileName = oldFileName[:-4] + '.php'
+print 'GSLALUA is now saving', newFilename
+with open(newFilename, 'w') as newFile:
+    newFile.write("{0}".format(str(newCode)))
