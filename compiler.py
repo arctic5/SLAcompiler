@@ -106,9 +106,9 @@ if fileImported == 0:
     print "You should probably end it in .html since that's what this is."
     newFilename = raw_input('>>')
 else:
-    if phpCodeUsed = 'false':
+    if phpCodeUsed == 'false':
         newFilename = oldFileName[:-4] + '.html'
-    else
+    else:
         newFileName = oldFileName[:-4] + '.php'
 print 'GSLALUA is now saving', newFilename
 with open(newFilename, 'w') as newFile:
