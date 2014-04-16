@@ -1,2 +1,11 @@
 *.pyc
 demo.htmlcompiled.html
+ignorethisfolder/*
+*.c
+*.cy.c
+*.o
+*.pyc
+*.pyo
+*.pyd
+dist/*
+build/*
