@@ -6,7 +6,7 @@ def ignorePHP():
     global newCode
     global currentCharToCheck
     phpCodeUsed = 'true'
-    while code[currentCharToCheck] != '>':
+    while code[currentCharToCheck] != '?' and code[currentCharToCheck+1] != '>':
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
