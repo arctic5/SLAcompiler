@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>GSLAUUA: Write Less Do More HTML with CSS selectors.</title> 
+    <link href="http://fonts.googleapis.com/css?family=Patrick+Hand" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Jockey+One" rel="stylesheet" type="text/css">
+    <style>
+body{
+    margin:0;
+    background:rgb(118, 194, 118);
+    font-family:"Jockey One", sans-serif;
+}
+#container{
+    margin-right:200px;
+}
+#header{
+    color:white;
+    font-size:20vw;
+    text-shadow:0 0 3px black;
+    text-align:center;
+    font-family:'Patrick Hand',sans-serif;
+    font-weight:bold;
+}
+#content{
+    background:white;
+    padding:5px;
+}
+h1{
+    margin:2px 0 0;
+    font-family:"Jockey One", sans-serif;
+}
+p {margin:0 0 0 20px;}
+#menu{
+    top:0;
+    right:0;
+    position:fixed;
+    font-size:30px;
+    text-shadow:0 0 3px black;
+    width:200px;
+    padding:11px;
+    box-sizing:border-box;
+    text-align:right;
+    font-family:'Patrick Hand',sans-serif;
+}
+#menu a, #menu a:visited{
+    color:white;
+    text-decoration:none;
+    display:block;
+}
+#menu a:hover{
+    color:red;
+}
+pre, code{
+    color:black;
+    background:#EFEFEF;
+    word-break: break-word;
+    word-wrap: break-word;
+    overflow-wrap:break-word;
+}
+pre{
+    padding:15px;
+}
+.blue{color:blue;}
+@media all and (max-width:600px){
+    #container{
+        margin-right:0;
+    }
+    #header{
+        margin-top:40px;
+    }
+    #menu{
+        width:100%;
+        top:0;
+        left:0;
+        text-align:center;
+        background:rgb(118, 194, 118);
+    }
+    #menu a{
+        display:inline-block;
+        background:rgba(230, 230, 230, 0.5);
+        padding:4px;
+        border-radius:8px;
+    }
+}
+@media all and (max-width:576px){
+    #header{
+        margin-top:95px;
+    }
+}
+@media all and (max-width:352px){
+    #header{
+        margin-top:150px;
+    }
+}
+    </style>
+    <meta name="viewport" content="initial-scale=1"/>
+</head>
+<body>
+    <div id="container">
+        <div id="header"><abbr title="GSLAUUA Sounds Like A Unix Utility Acronym">GSLAUUA</abbr></div>
+        <div id="menu">
+            <a href="#about">ABOUT</a>
+            <a href="#syntax">SYNTAX</a>
+            <a href="#acronym">ACRONYM</a>
+            <a href="#usage">USAGE</a>
+            <a href="#download">DOWNLOAD</a>
+        </div>
+        <div id="content">
+            <h1 id="about">ABOUT</h1>
+              <p>GSLAUUA is a small Python-based "recompiler" designed to turn the original shorthand SLA syntax ito standard HTML. SLA is designed to be small and easy to write.</p>
+            <h1 id="syntax">SYNTAX</h1>
+              <p>SLA Syntax may look familiar to you. It's essentially HTML with CSS selectors baked right in. It doesn't need quotes or other special delimiters. It just works.</p>
+              <pre><code>&lt;style&gt;
+    .blue{color:blue;}
+&lt;/style&gt;
+&lt;div&gt;Sing the &lt;span.blue&gt;blues&lt;/span&gt;!&gt;</code><hr/><div>Sing the <span class="blue">blues</span>!</div></pre>
+              <p>SLA code can be written however you write HTML code, as long as you keep these things in mind:</p>
+              <ul>
+                  <li>Classes MUST be grouped together, like this:<br/><code>div.myclassone.myclasstwo</code></li>
+                  <li>Additional attributes are supported if you isolate them from the CSS selectors.<br><code>div#sumbit onclick="submit();"</code></li>
+                  <li>Items in PHP tags will be ignored, so they cannot be shortened.<br><code>&lt;?php echo '&lt;div class="class"&gt;Didn't get parsed!&lt;/div&gt;?'&gt;</code><br>HOWEVER, items OUTSIDE of PHP tags that are still affected by PHP <i>are</i> affected.<br><code>&lt;?php if(myVar &lt; 1){?&gt;&lt;div#parsed&gt;Got parsed!&lt;/div&gt;&lt;?php } ?&gt;</code></li>
+              </ul>
+            <h1 id="acronym">ACRONYM</h1>
+              <p>The name "GSLAUUA" is actually an old joke of mine.</p>
+              <pre>&lt;Orangestar&gt; If I ever make a utility
+&lt;Orangestar&gt; I'm going to call it GSLAUUA
+&lt;Orangestar&gt; and it'll stand for
+&lt;Orangestar&gt; GSLAUUA Sounds Like A Linux Utility Acronym</pre>
+              <p>Keeping up with the "useless acronym" theme, SLA stands for "Scripting Language Acronym".</p>
+            <h1 id="usage">USAGE</h1>
+        </div>
+    </div>
+</body>
+</html>
