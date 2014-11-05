@@ -6,7 +6,7 @@ def ignorePHP():
     global newCode
     global currentCharToCheck
     phpCodeUsed = 'true'
-    while code[currentCharToCheck] != '?' and code[currentCharToCheck+1] != '>':
+    while ((code[currentCharToCheck] != '?' or code[currentCharToCheck] != '%') and code[currentCharToCheck+1] != '>'): #This _should_ escape on both PHP and ASP, but if someone can test that please do.
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
@@ -51,7 +51,7 @@ def startReplacing():
     global currentCharToCheck
     newCode += code[currentCharToCheck] # Put in the <.
     currentCharToCheck += 1
-    if code[currentCharToCheck] == '?': #Special code to ignore PHP blocks.
+    if code[currentCharToCheck] == '?' or code[currentCharToCheck] == '%': #Special code to ignore PHP and ASP blocks.
         ignorePHP()
     else:
         while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
