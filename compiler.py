@@ -15,9 +15,10 @@ def ignorePHP():
 def newUserAttribute():
     global newCode
     global currentCharToCheck
+    endMarker = code[currentCharToCheck]
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
-    while code[currentCharToCheck] != '"':
+    while code[currentCharToCheck] != endMarker:
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
@@ -59,7 +60,7 @@ def startReplacing():
                 newClass()
             elif code[currentCharToCheck] == "#": # #s are ids
                 newId()
-            elif code[currentCharToCheck] == '"': # "s are user attributes
+            elif code[currentCharToCheck] == '"' or "'": # "s and 's are user attributes
                 newUserAttribute()
             else:
                 newCode += code[currentCharToCheck]
@@ -74,8 +75,7 @@ if len(sys.argv) != 1:
         fileImported = 1
         openThisFile = oldFileName
 if fileImported == 0:
-    print 'GSLAUUA v0.01 alpha - A simple hypertext markup language recompiler.'
-    print 'Because GSLAUUA is more pronouncable than SHTMLR!'
+    print 'GSLAUUA - A simple hypertext markup language recompiler.'
     print 'Please enter the name of your SLA formatted file below.'
     openThisFile = raw_input('>>')
 if len(openThisFile) == 0:
