@@ -23,19 +23,19 @@
     </head>
     <body>
         This file can be quickly thrown into GSLAUUA to show how it works.<br/>
-        <div id="blue">For starters, this text should be in a pale blue box. This is achieved using a simple # to stand in for "id=".</div>
+        <div#blue>For starters, this text should be in a pale blue box. This is achieved using a simple # to stand in for "id=".</div>
         <br/><br/>
         <?php
             x = 2;
-            if (x  0){ print("If you are using a PHP server, you should notice this text, where the greater-than symbol was left alone in the operator.")}
+            if (x > 0){ print("If you are using a PHP server, you should notice this text, where the greater-than symbol was left alone in the operator.")}
         ?>
         <br/><br/>
         Here are some boxes.
         <br/>
-        <div class="box red"></div>
-        <div class="box blue"></div>
-        <div class="box green"></div>
-        <div class="box yellow"></div>
+        <div.box.red></div>
+        <div.box.blue></div>
+        <div.box.green></div>
+        <div.box.yellow></div>
         <br/><br/><br/><br/><br/><br/>
         <a href="#blue" title='GSLAUUA supports both double-quotes and single-quotes for element attributes.'>If you lower your window size so that this link is the only thing showing, and then click on it, you will jump to the blue box, since it's an ID.
     </body>

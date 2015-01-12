@@ -1,7 +1,7 @@
-#!/usr/bin/env python2.7
-
+#!/usr/bin/env python3
+ 
 import sys
-
+ 
 def ignorePHP():
     global newCode
     global currentCharToCheck
@@ -11,7 +11,7 @@ def ignorePHP():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
-
+ 
 def newUserAttribute():
     global newCode
     global currentCharToCheck
@@ -23,7 +23,7 @@ def newUserAttribute():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
-
+ 
 def newClass():
     global newCode
     global currentCharToCheck
@@ -36,7 +36,7 @@ def newClass():
             newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"' #And finish it off with the closing "! DO NOT ADD A SPACE since spaces are added before classes and ids already. Other spaces are user-defined.
-
+ 
 def newId(): #Thankfully for me, ids are much easier to replace than classes.
     global newCode
     global currentCharToCheck
@@ -46,7 +46,7 @@ def newId(): #Thankfully for me, ids are much easier to replace than classes.
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"'
-
+ 
 def startReplacing():
     global newCode
     global currentCharToCheck
@@ -60,13 +60,13 @@ def startReplacing():
                 newClass()
             elif code[currentCharToCheck] == "#": # #s are ids
                 newId()
-            elif code[currentCharToCheck] == '"' or "'": # "s and 's are user attributes
+            elif code[currentCharToCheck] in '"\'': # "s and 's are user attributes
                 newUserAttribute()
             else:
                 newCode += code[currentCharToCheck]
                 currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
         newCode += code[currentCharToCheck] #Append the >
-
+ 
 fileImported = 0
 phpCodeUsed = 'false'
 if len(sys.argv) != 1:
@@ -75,41 +75,40 @@ if len(sys.argv) != 1:
         fileImported = 1
         openThisFile = oldFileName
 if fileImported == 0:
-    print 'GSLAUUA - A simple hypertext markup language recompiler.'
-    print 'Please enter the name of your SLA formatted file below.'
-    openThisFile = raw_input('>>')
+    print('GSLAUUA - A simple hypertext markup language recompiler.')
+    print('Please enter the name of your SLA formatted file below.')
+    openThisFile = input('>>')
 if len(openThisFile) == 0:
-    print 'Quit: No file opened.'
+    print('Quit: No file opened.')
     sys.exit()
 try:
     rawFileData = open(openThisFile, 'r') #r so we don't accidentally overwrite his code!
 except IOError:
-    print 'Quit: Unable to open file.'
+    print('Quit: Unable to open file.')
     sys.exit()
 code = rawFileData.read()
 rawFileData.close()
 currentCharToCheck = 0
 newCode = ''
-print 'GSLAUUA is now evaluating your code. Be patient!'
+print('GSLAUUA is now evaluating your code.')
 while len(code) != currentCharToCheck:
     if code[currentCharToCheck] == '<':
         startReplacing()
     else:
         newCode += code[currentCharToCheck] #There's probably a much better way to do this than write our code letter-for-letter.
     currentCharToCheck += 1
-
-#print newCode
-#raw_input('Press Enter')
+ 
+#print(newCode)
+#input('Press Enter')
 if fileImported == 0:
-    print "Good news! We have translated your SLA file to HTML!"
-    print "All we need is a filename for your new code and we're done."
-    print "You should probably end it in .html since that's what this is."
-    newFilename = raw_input('>>')
+    print("Your SLA-style file has been converted to HTML.")
+    print("Please enter the name you want to save the file as, including extension.")
+    newFilename = input('>>')
 else:
     if phpCodeUsed == 'false':
         newFilename = oldFileName[:-4] + '.html'
     else:
         newFileName = oldFileName[:-4] + '.php'
-print 'GSLALUA is now saving', newFilename
+print('GSLALUA is now saving ' + newFilename)
 with open(newFilename, 'w') as newFile:
     newFile.write("{0}".format(str(newCode)))
