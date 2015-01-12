@@ -17,25 +17,6 @@ As long as classes are grouped together, you can put these CSS-styled attributes
 
     <div.wide.clearfix#contactoptions onclick="contactMe()">
 
-For a good example of a page, throw the following into a file and compile it. If all went well, the text should be blue.
-
-    <!DOCTYPE html>
-    <html>
-      <meta charset="utf-8">
-      <title>Blue text!</title>
-      <style>
-        #blue {
-          color: blue;
-        }
-      </style>
-    <head>
-    </head>
-    <body#blue>
-      <p#blue>This text is blue!</p>
-      <p>This text is not!</p>
-    </body>
-    </html>
-
 <!-- /*This text kept for prosperity*/
 
 This is a compiler for GSLAUUA written by myself and orangestar written in python
