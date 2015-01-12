@@ -1,5 +1,5 @@
 *.pyc
-demo.htmlcompiled.html
+demo.html
 ignorethisfolder/*
 *.c
 *.cy.c
