@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
- 
+
 import sys
- 
+
 def ignorePHP():
     global newCode
     global currentCharToCheck
@@ -11,7 +11,7 @@ def ignorePHP():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
- 
+
 def newUserAttribute():
     global newCode
     global currentCharToCheck
@@ -23,7 +23,7 @@ def newUserAttribute():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
- 
+
 def newClass():
     global newCode
     global currentCharToCheck
@@ -36,7 +36,7 @@ def newClass():
             newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"' #And finish it off with the closing "! DO NOT ADD A SPACE since spaces are added before classes and ids already. Other spaces are user-defined.
- 
+
 def newId(): #Thankfully for me, ids are much easier to replace than classes.
     global newCode
     global currentCharToCheck
@@ -46,7 +46,7 @@ def newId(): #Thankfully for me, ids are much easier to replace than classes.
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += '"'
- 
+
 def startReplacing():
     global newCode
     global currentCharToCheck
@@ -66,7 +66,7 @@ def startReplacing():
                 newCode += code[currentCharToCheck]
                 currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
         newCode += code[currentCharToCheck] #Append the >
- 
+
 fileImported = 0
 phpCodeUsed = 'false'
 if len(sys.argv) != 1:
@@ -97,7 +97,7 @@ while len(code) != currentCharToCheck:
     else:
         newCode += code[currentCharToCheck] #There's probably a much better way to do this than write our code letter-for-letter.
     currentCharToCheck += 1
- 
+
 #print(newCode)
 #input('Press Enter')
 if fileImported == 0:
