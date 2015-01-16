@@ -9,3 +9,4 @@ ignorethisfolder/*
 *.pyd
 dist/*
 build/*
+Thumbs.db

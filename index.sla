@@ -1,136 +1,219 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <title>GSLAUUA: Write Less Do More HTML with CSS selectors.</title> 
-    <link href="http://fonts.googleapis.com/css?family=Patrick+Hand" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Jockey+One" rel="stylesheet" type="text/css">
-    <style>
-body{
-    margin:0;
-    background:rgb(118, 194, 118);
-    font-family:"Jockey One", sans-serif;
-}
-#container{
-    margin-right:200px;
-}
-#header{
-    color:white;
-    font-size:20vw;
-    text-shadow:0 0 3px black;
-    text-align:center;
-    font-family:'Patrick Hand',sans-serif;
-    font-weight:bold;
-}
-#content{
-    background:white;
-    padding:5px;
-}
-h1{
-    margin:2px 0 0;
-    font-family:"Jockey One", sans-serif;
-}
-p {margin:0 0 0 20px;}
-#menu{
-    top:0;
-    right:0;
-    position:fixed;
-    font-size:30px;
-    text-shadow:0 0 3px black;
-    width:200px;
-    padding:11px;
-    box-sizing:border-box;
-    text-align:right;
-    font-family:'Patrick Hand',sans-serif;
-}
-#menu a, #menu a:visited{
-    color:white;
-    text-decoration:none;
-    display:block;
-}
-#menu a:hover{
-    color:red;
-}
-pre, code{
-    color:black;
-    background:#EFEFEF;
-    word-break: break-word;
-    word-wrap: break-word;
-    overflow-wrap:break-word;
-}
-pre{
-    padding:15px;
-}
-.blue{color:blue;}
-@media all and (max-width:600px){
-    #container{
-        margin-right:0;
-    }
-    #header{
-        margin-top:40px;
-    }
-    #menu{
-        width:100%;
-        top:0;
-        left:0;
-        text-align:center;
-        background:rgb(118, 194, 118);
-    }
-    #menu a{
-        display:inline-block;
-        background:rgba(230, 230, 230, 0.5);
-        padding:4px;
-        border-radius:8px;
-    }
-}
-@media all and (max-width:576px){
-    #header{
-        margin-top:95px;
-    }
-}
-@media all and (max-width:352px){
-    #header{
-        margin-top:150px;
-    }
-}
-    </style>
-    <meta name="viewport" content="initial-scale=1"/>
-</head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GSLAUUA: Write Less Do More HTML with CSS selectors.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Abel|Erica+One|Oswald:700' rel='stylesheet' type='text/css'>
+    <link href='./assets/main.css' rel='stylesheet' type='text/css'>
+    </head>
 <body>
-    <div#container>
-        <div#header><abbr title="GSLAUUA Sounds Like A Unix Utility Acronym">GSLAUUA</abbr></div>
-        <div id="menu">
-            <a href="#about">ABOUT</a>
-            <a href="#syntax">SYNTAX</a>
-            <a href="#acronym">ACRONYM</a>
-            <a href="#usage">USAGE</a>
-            <a href="#download">DOWNLOAD</a>
+    <nav.navbar.navbar-default.navbar-fixed-top>
+      <div.container>
+        <div.navbar-header>
+          <button.navbar-toggle.collapsed type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span.sr-only>Toggle navigation</span>
+            <span.icon-bar></span>
+            <span.icon-bar></span>
+            <span.icon-bar></span>
+          </button>
+          <a.navbar-brand href="#"><abbr title="GSLAUUA Sounds Like A Unix Utility Acronym">GSLAUUA</abbr></a>
         </div>
-        <div#content>
-            <h1 id="about">ABOUT</h1>
-              <p>GSLAUUA is a small Python-based "recompiler" designed to turn the original shorthand SLA syntax ito standard HTML. SLA is designed to be small and easy to write.</p>
-            <h1 id="syntax">SYNTAX</h1>
-              <p>SLA Syntax may look familiar to you. It's essentially HTML with CSS selectors baked right in. It doesn't need quotes or other special delimiters. It just works.</p>
-              <pre><code>&lt;style&gt;
-    .blue{color:blue;}
-&lt;/style&gt;
-&lt;div&gt;Sing the &lt;span.blue&gt;blues&lt;/span&gt;!&gt;</code><hr/><div>Sing the <span.blue>blues</span>!</div></pre>
-              <p>SLA code can be written however you write HTML code, as long as you keep these things in mind:</p>
-              <ul>
-                  <li>Classes MUST be grouped together, like this:<br/><code>div.myclassone.myclasstwo</code></li>
-                  <li>Additional attributes are supported if you isolate them from the CSS selectors.<br><code>div#sumbit onclick="submit();"</code></li>
-                  <li>Items in PHP tags will be ignored, so they cannot be shortened.<br><code>&lt;?php echo '&lt;div class="class"&gt;Didn't get parsed!&lt;/div&gt;?'&gt;</code><br>HOWEVER, items OUTSIDE of PHP tags that are still affected by PHP <i>are</i> affected.<br><code>&lt;?php if(myVar &lt; 1){?&gt;&lt;div#parsed&gt;Got parsed!&lt;/div&gt;&lt;?php } ?&gt;</code></li>
-              </ul>
-            <h1 id="acronym">ACRONYM</h1>
-              <p>The name "GSLAUUA" is actually an old joke of mine.</p>
-              <pre>&lt;Orangestar&gt; If I ever make a utility
-&lt;Orangestar&gt; I'm going to call it GSLAUUA
-&lt;Orangestar&gt; and it'll stand for
-&lt;Orangestar&gt; GSLAUUA Sounds Like A Linux Utility Acronym</pre>
-              <p>Keeping up with the "useless acronym" theme, SLA stands for "Scripting Language Acronym".</p>
-            <h1 id="usage">USAGE</h1>
-              <p>
+        <div#navbar.collapse.navbar-collapse>
+          <ul.nav.navbar-nav>
+            <li.active><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#download">Download</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+     <!-- Carousel
+    ================================================== -->
+    <div#myCarousel.carousel.slide data-ride="carousel">
+      <!-- Indicators -->
+      <ol.carousel-indicators>
+        <li.active data-target="#myCarousel" data-slide-to="0"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      
+      <div.carousel-inner role="listbox">
+        <div.item.active style="background-image:url('./assets/ssi.jpg');background-position:left;">
+          <!--<img src="" alt="First slide">-->
+          <div.container>
+            <div.carousel-caption>
+              <h1>CSS Selectors in HTML</h1>
+              <p>No messy JavaScript required.</p>
+              <p><a.btn.btn-lg.btn-primary href="#about" role="button">Learn More</a></p>
+            </div>
+          </div>
         </div>
-    </div>
+        <div.item style="background-image:url('./assets/designer.jpg')">
+          <div.container>
+            <div.carousel-caption>
+              <h1>Works with all your frameworks.</h1>
+              <p>Won't touch your existing HTML.</p>
+              <p><a.btn.btn-lg.btn-primary href="#about" role="button">Learn More</a></p>
+            </div>
+          </div>
+        </div>
+        <div.item style="background-image:url('./assets/cables.jpg')">
+          <div.container>
+            <div.carousel-caption>
+              <h1>Any network, any browser.</h1>
+              <p>SLA goes in, HTML comes out.</p>
+              <p><a.btn.btn-lg.btn-primary href="#about" role="button">Learn More</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a.left.carousel-control href="#myCarousel" role="button" data-slide="prev">
+        <span.glyphicon.glyphicon-chevron-left aria-hidden="true"></span>
+        <span.sr-only>Previous</span>
+      </a>
+      <a.right.carousel-control href="#myCarousel" role="button" data-slide="next">
+        <span.glyphicon.glyphicon-chevron-right aria-hidden="true"></span>
+        <span.sr-only>Next</span>
+      </a>
+    </div><!-- /.carousel -->
+
+
+
+    <!-- Marketing messaging and featurettes
+    ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div.container.marketing#about>
+
+      <!-- START THE FEATURETTES -->
+
+      <div.row.featurette>
+        <div.col-md-7>
+          <h2.featurette-heading>Two beautiful languages, <span.text-muted>together at long last.</span></h2>
+          <p.lead>We really love working on our web code by hand. As such, we end up typing the phrases "class" and "id" a lot. We realized how much more we liked CSS selectors, and thus, SLA was born.</p>
+          <p>We're certainly not the first application that allows shortening HTML, but most of the ones we found were either entire text editors or HTML preprocessors. As a separate compiler, we don't have to hear Vim vs. Emacs debates.</p>
+        </div>
+        <div.col-md-5.code-block>
+          <code>&lt;a#myDiv.button&gt;Sign Up now!&lt;/a&gt;
+&lt;p&gt;
+    GSLAUUA only modifies, and never depends. If it doesn't
+    understand something, it just won't touch it.
+&lt;/p&gt;
+&lt;p.second data-paragraph="second"&gt;
+    For example, this paragraph will retain it's data-paragraph
+    property, even though it has been given the "second" class.
+&lt;/p&gt;
+&lt;a href="#myDiv"&gt;
+    And they work like you expect. IDs like IDs,
+    classes like classes.
+&lt;/a&gt;<hr />&lt;a id="sign-up" class="button"&gt;Sign Up now!&lt;/a&gt;
+&lt;p&gt;
+    GSLAUUA only modifies, and never depends. If it doesn't
+    understand something, it just won't touch it.
+&lt;/p&gt;
+&lt;p class="second" data-paragraph="second"&gt;
+    For example, this paragraph will retain it's data-paragraph
+    property, even though it has been given the "second" class.
+&lt;/p&gt;
+&lt;a href="#sign-up"&gt;
+    And they work like you expect. IDs like IDs,
+    classes like classes.
+&lt;/a&gt;</code>
+        </div>
+      </div>
+
+      <hr.featurette-divider />
+
+      <div.row.featurette>
+        <!--<div.col-md-5>
+          <img.featurette-image.img-responsive src="./assets/example.png" alt="Generic placeholder image">
+        </div>-->
+        <div>
+          <h2.featurette-heading style="margin-top:40px;">You don't need to learn a thing, <span.text-muted>you already know this language.</span></h2>
+          <p.lead>GSLAUUA works with everything you know and love about web development. Just point NppExec or whatever you use to GSLAUUA and compile when you save. To prove it's flexibility, we wrote this whole site in SLA-converted Bootstrap. <a href="">Here's the source.</a></p>
+        </div>
+      </div>
+
+      <hr.featurette-divider />
+
+      <div.row.featurette>
+        <div.col-md-5>
+          <img.featurette-image.img-responsive src="./assets/console.png" alt="Console, showing GSLAUUA with no arguments." />
+        </div>
+        <div.col-md-7>
+          <h2.featurette-heading>Hobbyist? Novice? Professional? <span.text-muted>We've got you covered.</span></h2>
+          <p.lead>GSLAUUA can be used from command line by simply giving it the location of your file with the extension <b>".sla"</b>. If you're not comfortable with the command line, it supports drag-and-drop on Windows, and even has a small interface when you start it with no arguments.</p>
+        </div>
+      </div>
+
+      <hr.featurette-divider />
+
+      <!-- /END THE FEATURETTES -->
+
+      
+
+      <!-- Three columns of text below the carousel -->
+      <div.row>
+        <div.col-lg-4>
+          <img.img-circle src="./assets/symb_code.png" alt="The main feature is the code." style="width: 140px; height: 140px;">
+            <h2>Concise</h2>
+            <p>GSLAUUA is makes code smaller, quicker, and easier to type. Simply place the required symbol and compile.</p>
+          <!--<p><a.btn.btn-default" href="#" role="button">View details &raquo;</a></p>-->
+        </div><!-- /.col-lg-4 -->
+        <div.col-lg-4>
+          <img.img-circle src="./assets/symb_clock.png" alt="It shares Python's strengths." style="width: 140px; height: 140px;">
+          <h2>Quick</h2>
+          <p>GSLAUUA compiles as fast as your computer can go. On a bad day, it may only take a few seconds.</p>
+          <!--<p><a.btn.btn-default" href="#" role="button">View details &raquo;</a></p>-->
+        </div><!-- /.col-lg-4 -->
+        <div.col-lg-4">
+          <img.img-circle" src="./assets/symb_folder.png" alt="It's only one file, which adds another strength:" style="width: 140px; height: 140px;">
+          <h2>Portable</h2>
+          <p>Wherever there's Python, there's GSLAUUA. It doesn't require any other dependencies. For everyone else, there's the EXE.</p>
+          <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+
+      <hr.featurette-divider />
+        
+      <div.row.center#download>
+        <h2>Ready to get started?</h2>
+        <p>
+            <a.btn.btn-lg.btn-success href="https://raw.githubusercontent.com/arctic5/SLAcompiler/master/compiler.py" role="button">Download .py for Python</a>
+            <a.btn.btn-lg.btn-primary href="https://github.com/arctic5/SLAcompiler/releases" role="button">Get EXE Versions for Windows</a>
+            <p.small>You may need to right-click and "save-as"</p>
+        </p>
+      </div>
+        
+      <hr.footer-divider />
+      
+      <!-- FOOTER -->
+      <footer>
+        <p.pull-right><a href="#">Back to top</a></p>
+        <p><a href="http://github.com/arctic5/SLAcompiler">Check us out on Github!</a></p>
+      </footer>
+
+    </div><!-- /.container -->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./assets/script.js"></script>
 </body>
 </html>
