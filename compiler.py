@@ -11,6 +11,15 @@ def ignorePHP():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
+    
+def ignoreComments():
+    global newCode
+    global currentCharToCheck
+    while ((code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) != '-->'):
+        newCode += code[currentCharToCheck]
+        currentCharToCheck += 1
+    newCode += "-->"
+    currentCharToCheck += 2
 
 def newUserAttribute():
     global newCode
@@ -54,6 +63,8 @@ def startReplacing():
     currentCharToCheck += 1
     if code[currentCharToCheck] == '?' or code[currentCharToCheck] == '%': #Special code to ignore PHP and ASP blocks.
         ignorePHP()
+    elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) == '!--':
+        ignoreComments()
     else:
         while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
             if code[currentCharToCheck] == '.': # .s are classes
