@@ -30,18 +30,18 @@
             <span.icon-bar></span>
             <span.icon-bar></span>
           </button>
-          <a.navbar-brand href="#"><abbr title="GSLAUUA Sounds Like A Unix Utility Acronym">GSLAUUA</abbr></a>
+          <a.navbar-brand href="#top"><abbr title="GSLAUUA Sounds Like A Unix Utility Acronym">GSLAUUA</abbr></a>
         </div>
         <div#navbar.collapse.navbar-collapse>
           <ul.nav.navbar-nav>
-            <li.active><a href="#">Home</a></li>
+            <li.active><a href="#top">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#download">Download</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    
+    <div#top></div><!--Fix for smoothscroll-->
      <!-- Carousel
     ================================================== -->
     <div#myCarousel.carousel.slide data-ride="carousel">
@@ -173,19 +173,19 @@
           <img.img-circle src="./assets/symb_code.png" alt="The main feature is the code." style="width: 140px; height: 140px;">
             <h2>Concise</h2>
             <p>GSLAUUA is makes code smaller, quicker, and easier to type. Simply place the required symbol and compile.</p>
-          <!--<p><a.btn.btn-default" href="#" role="button">View details &raquo;</a></p>-->
+          <!--<p><a.btn.btn-default" href="#top" role="button">View details &raquo;</a></p>-->
         </div><!-- /.col-lg-4 -->
         <div.col-lg-4>
           <img.img-circle src="./assets/symb_clock.png" alt="It shares Python's strengths." style="width: 140px; height: 140px;">
           <h2>Quick</h2>
           <p>GSLAUUA compiles as fast as your computer can go. On a bad day, it may only take a few seconds.</p>
-          <!--<p><a.btn.btn-default" href="#" role="button">View details &raquo;</a></p>-->
+          <!--<p><a.btn.btn-default" href="#top" role="button">View details &raquo;</a></p>-->
         </div><!-- /.col-lg-4 -->
         <div.col-lg-4">
           <img.img-circle" src="./assets/symb_folder.png" alt="It's only one file, which adds another strength:" style="width: 140px; height: 140px;">
           <h2>Portable</h2>
           <p>Wherever there's Python, there's GSLAUUA. It doesn't require any other dependencies. For everyone else, there's the EXE.</p>
-          <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
+          <!--<p><a class="btn btn-default" href="#top" role="button">View details &raquo;</a></p>-->
         </div><!-- /.col-lg-4 -->
       </div><!-- /.row -->
 
@@ -204,7 +204,7 @@
       
       <!-- FOOTER -->
       <footer>
-        <p.pull-right><a href="#">Back to top</a></p>
+        <p.pull-right><a href="#top">Back to top</a></p>
         <p><a href="http://github.com/arctic5/SLAcompiler">Check us out on Github!</a></p>
       </footer>
 
