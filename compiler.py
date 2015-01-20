@@ -12,7 +12,19 @@ def ignorePHP():
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
     currentCharToCheck += 1
-    
+
+def ignoreScripts():
+    global newCode
+    global currentCharToCheck
+    while (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5] + code[currentCharToCheck+6]) != '/script'):
+        if code[currentCharToCheck]+code[currentCharToCheck+1] == '//':
+            ignoreScriptComments('single')
+        if code[currentCharToCheck]+code[currentCharToCheck+1] == '/*':
+            ignoreScriptComments('multi')
+        newCode += code[currentCharToCheck]
+        currentCharToCheck += 1
+    #"/script>" won't be checked by the parser so we can just let the code write itself.
+
 def ignoreComments():
     global newCode
     global currentCharToCheck
@@ -60,13 +72,17 @@ def newId(): #Thankfully for me, ids are much easier to replace than classes.
 def startReplacing():
     global newCode
     global currentCharToCheck
+    scriptUsed = 'false'
     newCode += code[currentCharToCheck] # Put in the <.
     currentCharToCheck += 1
-    if code[currentCharToCheck] == '?' or code[currentCharToCheck] == '%': #Special code to ignore PHP and ASP blocks.
+    #Special escapes
+    if code[currentCharToCheck] == '?' or code[currentCharToCheck] == '%':
         ignorePHP()
     elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) == '!--':
         ignoreComments()
     else:
+        elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5]) == 'script':
+            scriptUsed = 'true'
         while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
             if code[currentCharToCheck] == '.': # .s are classes
                 newClass()
@@ -77,16 +93,18 @@ def startReplacing():
             else:
                 newCode += code[currentCharToCheck]
                 currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
+        if scriptUsed == 'true': #ignore script blocks
+            ignoreScripts()
         newCode += code[currentCharToCheck] #Append the >
 
-fileImported = 0
+fileImported = 'false'
 phpCodeUsed = 'false'
 if len(sys.argv) != 1:
     oldFileName = sys.argv[1]
     if (oldFileName[-4:]) == '.sla':
-        fileImported = 1
+        fileImported = 'true'
         openThisFile = oldFileName
-if fileImported == 0:
+if fileImported == 'false':
     print('GSLAUUA - A simple hypertext markup language recompiler.')
     print('Please enter the name of your SLA formatted file below.')
     openThisFile = input('>>')
@@ -133,7 +151,7 @@ these details if you plan to post an issue to GitHub!')
 
 #print(newCode)
 #input('Press Enter')
-if fileImported == 0:
+if fileImported == 'false':
     print("Your SLA-style file has been converted to HTML.")
     print("Please enter the name you want to save the file as, including extension.")
     newFilename = input('>>')
