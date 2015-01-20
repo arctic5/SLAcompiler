@@ -41,7 +41,6 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-    <div#top></div><!--Fix for smoothscroll-->
      <!-- Carousel
     ================================================== -->
     <div#myCarousel.carousel.slide data-ride="carousel">
