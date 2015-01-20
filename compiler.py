@@ -7,7 +7,7 @@ def ignorePHP():
     global newCode
     global currentCharToCheck
     phpCodeUsed = 'true'
-    while ((code[currentCharToCheck] != '?' or code[currentCharToCheck] != '%') and code[currentCharToCheck+1] != '>'): #This _should_ escape on both PHP and ASP, but if someone can test that please do.
+    while ((code[currentCharToCheck] != '?' or code[currentCharToCheck] != '%') and code[currentCharToCheck+1] != '>'):
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     newCode += code[currentCharToCheck]
@@ -16,11 +16,7 @@ def ignorePHP():
 def ignoreScripts():
     global newCode
     global currentCharToCheck
-    while (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5] + code[currentCharToCheck+6]) != '/script'):
-        if code[currentCharToCheck]+code[currentCharToCheck+1] == '//':
-            ignoreScriptComments('single')
-        if code[currentCharToCheck]+code[currentCharToCheck+1] == '/*':
-            ignoreScriptComments('multi')
+    while (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5] + code[currentCharToCheck+6] + code[currentCharToCheck+7] + code[currentCharToCheck+8] != '</script>'): #Turns out even if it's in a string, HTML just says "fvck everything" when it comes to </script>.
         newCode += code[currentCharToCheck]
         currentCharToCheck += 1
     #"/script>" won't be checked by the parser so we can just let the code write itself.
@@ -81,8 +77,8 @@ def startReplacing():
     elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) == '!--':
         ignoreComments()
     else:
-        elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5]) == 'script':
-            scriptUsed = 'true'
+        if (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5]) == 'script':
+            scriptUsed = 'true' #we're delaying this so we can still check for classes and IDs on the <script> tag. I don't know why you'd want to do that but hell someone probably has a reason.
         while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
             if code[currentCharToCheck] == '.': # .s are classes
                 newClass()
