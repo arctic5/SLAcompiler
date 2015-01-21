@@ -5,93 +5,93 @@ import traceback
 
 def ignorePHP():
     global newCode
-    global currentCharToCheck
+    global position
     phpCodeUsed = 'true'
-    while ((code[currentCharToCheck] != '?' or code[currentCharToCheck] != '%') and code[currentCharToCheck+1] != '>'):
-        newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
-    newCode += code[currentCharToCheck]
-    currentCharToCheck += 1
+    while ((code[position] != '?' or code[position] != '%') and code[position+1] != '>'):
+        newCode += code[position]
+        position += 1
+    newCode += code[position]
+    position += 1
 
 def ignoreScripts():
     global newCode
-    global currentCharToCheck
-    while (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5] + code[currentCharToCheck+6] + code[currentCharToCheck+7] + code[currentCharToCheck+8] != '</script>'): #Turns out even if it's in a string, HTML just says "fvck everything" when it comes to </script>.
-        newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
+    global position
+    while (code[position] + code[position+1] + code[position+2] + code[position+3] + code[position+4] + code[position+5] + code[position+6] + code[position+7] + code[position+8] != '</script>'): #Turns out even if it's in a string, HTML just says "fvck everything" when it comes to </script>.
+        newCode += code[position]
+        position += 1
     #"/script>" won't be checked by the parser so we can just let the code write itself.
 
 def ignoreComments():
     global newCode
-    global currentCharToCheck
-    while ((code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) != '-->'):
-        newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
+    global position
+    while ((code[position] + code[position+1] + code[position+2]) != '-->'):
+        newCode += code[position]
+        position += 1
     newCode += "-->"
-    currentCharToCheck += 2
+    position += 2
 
 def newUserAttribute():
     global newCode
-    global currentCharToCheck
-    endMarker = code[currentCharToCheck]
-    newCode += code[currentCharToCheck]
-    currentCharToCheck += 1
-    while code[currentCharToCheck] != endMarker:
-        newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
-    newCode += code[currentCharToCheck]
-    currentCharToCheck += 1
+    global position
+    endMarker = code[position]
+    newCode += code[position]
+    position += 1
+    while code[position] != endMarker:
+        newCode += code[position]
+        position += 1
+    newCode += code[position]
+    position += 1
 
 def newClass():
     global newCode
-    global currentCharToCheck
+    global position
     newCode += ' class="'
-    currentCharToCheck += 1 # Replace . with ' class="'. NOTE THE SPACE. When replacing classes, .s will ALWAYS be transformed into a space. .s cannot be used for IDs or classes. It's not valid CSS.
-    while code[currentCharToCheck] not in '#> ': # Keep checking until we hit a # (new id), a > (end of tag), or a space (undefined attribute)
-        if code[currentCharToCheck] == '.': #Special code to group classes together
+    position += 1 # Replace . with ' class="'. NOTE THE SPACE. When replacing classes, .s will ALWAYS be transformed into a space. .s cannot be used for IDs or classes. It's not valid CSS.
+    while code[position] not in '#> ': # Keep checking until we hit a # (new id), a > (end of tag), or a space (undefined attribute)
+        if code[position] == '.': #Special code to group classes together
             newCode += ' '
         else:
-            newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
+            newCode += code[position]
+        position += 1
     newCode += '"' #And finish it off with the closing "! DO NOT ADD A SPACE since spaces are added before classes and ids already. Other spaces are user-defined.
 
 def newId(): #Thankfully for me, ids are much easier to replace than classes.
     global newCode
-    global currentCharToCheck
+    global position
     newCode += ' id="'
-    currentCharToCheck += 1
-    while code[currentCharToCheck] not in '#> .':
-        newCode += code[currentCharToCheck]
-        currentCharToCheck += 1
+    position += 1
+    while code[position] not in '#> .':
+        newCode += code[position]
+        position += 1
     newCode += '"'
 
 def startReplacing():
     global newCode
-    global currentCharToCheck
+    global position
     scriptUsed = 'false'
-    newCode += code[currentCharToCheck] # Put in the <.
-    currentCharToCheck += 1
+    newCode += code[position] # Put in the <.
+    position += 1
     #Special escapes
-    if code[currentCharToCheck] == '?' or code[currentCharToCheck] == '%':
+    if code[position] == '?' or code[position] == '%':
         ignorePHP()
-    elif (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2]) == '!--':
+    elif (code[position] + code[position+1] + code[position+2]) == '!--':
         ignoreComments()
     else:
-        if (code[currentCharToCheck] + code[currentCharToCheck+1] + code[currentCharToCheck+2] + code[currentCharToCheck+3] + code[currentCharToCheck+4] + code[currentCharToCheck+5]) == 'script':
+        if (code[position] + code[position+1] + code[position+2] + code[position+3] + code[position+4] + code[position+5]) == 'script':
             scriptUsed = 'true' #we're delaying this so we can still check for classes and IDs on the <script> tag. I don't know why you'd want to do that but hell someone probably has a reason.
-        while code[currentCharToCheck] != '>': # Keep checking for replacements until we hit a close.
-            if code[currentCharToCheck] == '.': # .s are classes
+        while code[position] != '>': # Keep checking for replacements until we hit a close.
+            if code[position] == '.': # .s are classes
                 newClass()
-            elif code[currentCharToCheck] == "#": # #s are ids
+            elif code[position] == "#": # #s are ids
                 newId()
-            elif code[currentCharToCheck] in '"\'': # "s and 's are user attributes
+            elif code[position] in '"\'': # "s and 's are user attributes
                 newUserAttribute()
             else:
-                newCode += code[currentCharToCheck]
-                currentCharToCheck += 1 #If we didn't find anything to replace, write the code directly and move on.
+                newCode += code[position]
+                position += 1 #If we didn't find anything to replace, write the code directly and move on.
         if scriptUsed == 'true': #ignore script blocks
             ignoreScripts()
-        newCode += code[currentCharToCheck] #Append the >
+        newCode += code[position] #Append the >
 
 fileImported = 'false'
 phpCodeUsed = 'false'
@@ -114,16 +114,16 @@ except IOError:
     sys.exit()
 code = rawFileData.read()
 rawFileData.close()
-currentCharToCheck = 0
+position = 0
 newCode = ''
 print('GSLAUUA is now evaluating your code.')
 try:
-    while len(code) != currentCharToCheck:
-        if code[currentCharToCheck] == '<':
+    while len(code) != position:
+        if code[position] == '<':
             startReplacing()
         else:
-            newCode += code[currentCharToCheck] #There's probably a much better way to do this than write our code letter-for-letter.
-        currentCharToCheck += 1
+            newCode += code[position] #There's probably a much better way to do this than write our code letter-for-letter.
+        position += 1
 except (RuntimeError, TypeError, NameError, IndexError) as e:
     print('\n\
         ========================================\n\
